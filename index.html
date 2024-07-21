@@ -1,0 +1,113 @@
+<!DOCTYPE html> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab</title>
+    <link rel="icon" type="image/svg" href="./favicon.svg">
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+        body {
+            min-height: 98vh;
+            background-color: #121212;
+            --text-color: #b695d3;
+            --font-fam: monospace;
+        }
+        #image-background {
+            position: absolute;
+            inset: 0;
+            display: block;
+            height: 100%;
+            width: 100%;
+            background-position: center;
+            object-fit: cover;
+            background-repeat: no-repeat;
+            filter: brightness(.3);
+        }
+        .container {
+            inset: 0;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #clock {
+            font-family: var(--font-fam);
+            font-size: 10em;
+            font-weight: 900;
+            color: var(--text-color);
+            animation: fade-in 1s forwards;
+        }
+        .infos {
+            position: absolute;
+            inset: auto auto 2rem 2.5rem;
+            color: var(--text-color);
+            font-family: var(--font-fam);
+            font-size: 1.5em;
+        }
+        .infos > * {
+            --opacity: .5;
+            animation: fade-in 1s forwards;
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: var(--opacity, 1);
+            }
+        }
+    </style>
+</head>
+<body>
+   <img id="image-background" src="./background.jpg" alt="background.jpg">
+   <div class="container">
+        <p id="clock"></p>
+        <div class="infos">
+            <p id="browser"></p>
+            <p id="ip"></p>
+        </div>
+   </div> 
+   <script>
+        setInterval(clockDisplay, 10)
+        document.getElementById("browser").innerHTML = getBrowser()
+        getIp()
+
+        function clockDisplay() {
+            const date = new Date()
+            document.getElementById("clock").innerHTML = `${date.getHours()}:${(date.getMinutes() < 10 ? '0' : '') + date.getMinutes()}:${(date.getSeconds() < 10 ? '0' : '') + date.getSeconds()}`
+        }
+        async function getIp () {
+            const res = await fetch("https://api.ipify.org/?format=json")
+            const IP = await res.json()
+            document.getElementById("ip").innerHTML = IP.ip
+        }
+        function getBrowser() {
+            if ((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1) {
+                return 'Opera';
+            } else if (navigator.userAgent.indexOf("Edg") != -1) {
+                return 'Edge';
+            } else if (navigator.userAgent.indexOf("Chrome") != -1) {
+                return 'Chrome';
+            } else if (navigator.userAgent.indexOf("Safari") != -1) {
+                return 'Safari';
+            } else if (navigator.userAgent.indexOf("Firefox") != -1) {
+                return 'Firefox';
+            } else if ((navigator.userAgent.indexOf("MSIE") != -1) || (!!document.documentMode == true)) //IF IE > 10
+            {
+                return 'IE';
+            } else {
+                return 'unknown';
+            }
+        }
+   </script>
+</body>
+</html>
