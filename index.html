@@ -16,6 +16,14 @@
             background-color: #121212;
             --text-color: #AD3DA1;
             --font-fam: monospace;
+            --text-size: 1.5em;
+            --title-size: 10em;
+        }
+        @media(max-width: 928px){
+            body {
+                --text-size: 1em;
+                --title-size: 5em;
+            }
         }
         #image-background {
             position: absolute;
@@ -37,7 +45,7 @@
         }
         #clock {
             font-family: var(--font-fam);
-            font-size: 10em;
+            font-size: var(--title-size);
             font-weight: 900;
             color: var(--text-color);
             animation: fade-in 1s forwards;
@@ -47,7 +55,7 @@
             inset: auto auto 2rem 2.5rem;
             color: var(--text-color);
             font-family: var(--font-fam);
-            font-size: 1.5em;
+            font-size: var(--text-size);
         }
         .infos > * {
             --opacity: .5;
